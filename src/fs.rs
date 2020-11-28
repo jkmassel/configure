@@ -63,7 +63,7 @@ pub fn find_project_root() -> PathBuf {
 }
 
 pub fn find_secrets_repo() -> Result<PathBuf, ConfigureError> {
-    // TODO: Allow the user to set their own mobile secrets path using an environment variable
+    // TODO: Allow the user to set their own secrets path using an environment variable
 
     let home_dir = dirs::home_dir().expect("Unable to determine user home directory");
 
@@ -171,7 +171,7 @@ pub fn decrypt_files_for_configuration(
         create_parent_directory_for_path_if_not_exists(&destination)?;
 
         // If the developer tries to run `configure_apply` while missing the encrypted originals, this script will crash saying "missing file"
-        // We can try to detect this scenario and fix things for the developer if the mobile secrets are available locally, but it's tricky because
+        // We can try to detect this scenario and fix things for the developer if the secrets are available locally, but it's tricky because
         // we'd need to basically run `configure update` inside this method for just the one file. For now, we'll just error out.
         if !source.exists() {
             info!("Encrypted original file at {:?} not found", source);

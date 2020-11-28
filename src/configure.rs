@@ -126,21 +126,21 @@ pub fn apply_configuration(configuration: ConfigurationFile) {
 
 pub fn update_configuration(mut configuration: ConfigurationFile) {
     let starting_branch =
-        get_current_secrets_branch().expect("Unable to determine current mobile secrets branch");
+        get_current_secrets_branch().expect("Unable to determine current secrets branch");
     let starting_ref =
-        get_secrets_current_hash().expect("Unable to determine current mobile secrets commit hash");
+        get_secrets_current_hash().expect("Unable to determine current secrets commit hash");
 
     heading("Configure Update");
 
     //
-    // Step 1 – Fetch the latest mobile secrets from the server
+    // Step 1 – Fetch the latest secrets from the server
     //          We need them in order to update the pinned hash
     //
     let bar = ProgressBar::new_spinner();
     bar.enable_steady_tick(125);
-    bar.set_message("Fetching Latest Mobile Secrets");
+    bar.set_message("Fetching Latest Secrets");
 
-    fetch_secrets_latest_remote_data().expect("Unable to fetch latest mobile secrets");
+    fetch_secrets_latest_remote_data().expect("Unable to fetch latest secrets");
 
     bar.finish_and_clear();
 
@@ -282,11 +282,11 @@ fn prompt_for_branch(mut configuration: ConfigurationFile, force: bool) -> Confi
 
     let secrets_repo_path = find_secrets_repo();
     let current_branch =
-        get_current_secrets_branch().expect("Unable to determine current mobile secrets branch");
-    let branches = get_secrets_branches().expect("Unable to fetch mobile secrets branches");
+        get_current_secrets_branch().expect("Unable to determine current secrets branch");
+    let branches = get_secrets_branches().expect("Unable to fetch secrets branches");
 
     println!(
-        "We've found your mobile secrets repository at {:?}",
+        "We've found your secrets repository at {:?}",
         secrets_repo_path
     );
     newline();
@@ -372,11 +372,11 @@ fn configure_file_distance_behind_secrets_repo(
     debug!("Checking if configure file is behind secrets repo");
 
     let current_branch =
-        get_current_secrets_branch().expect("Unable to get current mobile secrets branch");
+        get_current_secrets_branch().expect("Unable to get current secrets branch");
     debug!("Current branch is: {:?}", current_branch);
 
     let current_hash =
-        get_secrets_current_hash().expect("Unable to get current mobile secrets hash");
+        get_secrets_current_hash().expect("Unable to get current secrets hash");
     debug!("Current hash is: {:?}", current_hash);
 
     check_out_branch(branch_name).expect("Unable to switch branches");
