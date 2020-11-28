@@ -73,6 +73,8 @@ pub fn generate_encryption_key() -> String {
 
 fn init_encryption() {
     debug!("libConfigure initializing encryption");
-    encryption::init();
+    encryption::init()
+        .expect("Encryption unavailable – there's no CSPRNG available on this machine");
+
     debug!("libConfigure encryption initialization successful");
 }

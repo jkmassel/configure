@@ -50,6 +50,10 @@ impl Default for ConfigurationFile {
 
 #[derive(Error, Debug)]
 pub enum ConfigureError {
+
+    #[error("Unable to initialize underlying encryption")]
+    EncryptionUnavailable,
+
     #[error("Unable to decrypt file")]
     DataDecryptionError(#[from] std::io::Error),
 

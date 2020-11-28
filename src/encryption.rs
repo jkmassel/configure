@@ -1,3 +1,4 @@
+use crate::ConfigureError;
 use log::debug;
 use sodiumoxide::base64::Variant;
 use sodiumoxide::base64::{decode, encode};
@@ -6,8 +7,11 @@ use std::fs::{read, write};
 use std::io::{Error, ErrorKind};
 use std::path::PathBuf;
 
-pub fn init() {
-    sodiumoxide::init().expect("Unable to initialize libsodium");
+pub fn init() -> Result<(), ConfigureError> {
+    return match sodiumoxide::init() {
+        Ok(()) => Ok(()),
+        Err(()) => Err(ConfigureError::EncryptionUnavailable),
+    }
 }
 
 pub fn generate_key() -> String {
@@ -79,4 +83,15 @@ fn decode_key(key: &str) -> sodiumoxide::crypto::secretbox::Key {
     key_bytes.copy_from_slice(&decoded_key_bytes);
 
     sodiumoxide::crypto::secretbox::Key(key_bytes)
+}
+
+#[cfg(test)]
+mod tests {
+    // Note this useful idiom: importing names from outer (for mod tests) scope.
+    use super::*;
+
+    #[test]
+    fn test_init_does_not_fail() {
+        assert!(init().is_ok());
+    }
 }

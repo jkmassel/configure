@@ -7,8 +7,6 @@ use std::env;
 use std::fs::{create_dir_all, remove_file, rename, File};
 use std::io::{BufReader, Error, Read, Write};
 use std::path::PathBuf;
-
-#[macro_use]
 use serde_json::json;
 
 /// Find the .configure file in the current project
